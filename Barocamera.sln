@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+# SharpDevelop 5.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Drive1", "Drive1.csproj", "{31981642-52D8-4069-9D8A-4D4EF3D1396E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31981642-52D8-4069-9D8A-4D4EF3D1396E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31981642-52D8-4069-9D8A-4D4EF3D1396E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31981642-52D8-4069-9D8A-4D4EF3D1396E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31981642-52D8-4069-9D8A-4D4EF3D1396E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
