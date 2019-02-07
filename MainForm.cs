@@ -65,7 +65,34 @@ namespace Drive1
         private void LineReceived(byte[] read_buf)
         {
 
-           
+      DataConverters DataConverter1 = new DataConverters();
+      Int32[] ValuesOfSource =  new Int32[10];
+
+      /// protection
+      /// for break of package
+      int tV=0; //test break message
+
+      if(read_buf.Length != 32)
+      	return;
+     
+      if(read_buf[0] == 0x40){
+
+     	
+     
+        	ValuesOfSource[0]=(read_buf[1]*100+read_buf[2]); //get Command Type [0]
+        	ValuesOfSource[1]=(read_buf[3]*10000 + read_buf[4]*100 + read_buf[5]); //get SizeOfMessage [1]
+
+
+     	
+     	// Send data to form
+     	DataConverter1.SetValuesToHTML(this.webBrowser1.Document, ref ValuesOfSource);
+    
+   
+        string dataStringHEX = BitConverter.ToString(read_buf);
+ 
+        dataStringHEX = dataStringHEX.Replace("-"," ");
+        ComList("WritePorts",dataStringHEX);
+        }    
  
         }
  
@@ -188,7 +215,7 @@ private void webBrowser1_Navigating(object sender,
 		
 		void MainFormClosing(object sender, FormClosingEventArgs e)
 		{
-			//MyPort.Close();
+			//if(MyPort != null)MyPort.Close();
 		}
 		
 	}

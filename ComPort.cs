@@ -35,7 +35,7 @@ UInt16 GetValueOfData=0;
 return GetValueOfData;
 }
 	
-public Int16 SetValuesToHTML(System.Windows.Forms.HtmlDocument document,ref UInt16[] ValuesOfSource){
+public Int16 SetValuesToHTML(System.Windows.Forms.HtmlDocument document,ref Int32[] ValuesOfSource){
 	     
 		 Object[] objArray = new Object[10];
 		 for (int i=0;i<10;i++)objArray[i] = (Object)(ValuesOfSource[i]);
