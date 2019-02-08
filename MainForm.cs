@@ -52,12 +52,15 @@ namespace Drive1
  private void MyPort_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
  	        System.Threading.Thread.Sleep(100);
+ 	        
+ 	        if(MyPort.IsOpen){
             int bytes = MyPort.BytesToRead;
             byte[]  read_buf = new byte[bytes];
             MyPort.Read(read_buf, 0, bytes);
                
             //string POT = MyPort.Read();
             this.BeginInvoke(new LineReceivedEvent(LineReceived), read_buf);
+ 	        }
         }
  
       private delegate void LineReceivedEvent(byte[] read_buf);
@@ -165,6 +168,7 @@ private void webBrowser1_Navigating(object sender,
             MyPort.Write(data, 0, data.Length);		
 			}
 	else{
+		  //  System.Threading.Thread.Sleep(300);
 			MyPort.Close();
 			}
 		
