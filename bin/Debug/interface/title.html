@@ -6,21 +6,69 @@
 <style type="text/css">
 <!--
 
-.styleEff{
- text-decoration: underline;
+.styleRoom{
  text-align: center;
- color:#FF6600;
+ color:#00AA00;
  font-family: Arial;
  font-weight:900;
- font-size: 20pt;
- text-shadow: #333 0.1em 0.1em;
- border: 0;
+ font-size: 16pt;
+ border-width: 0px;
+ background: transparent;
   } 
+ .styleLeft{
+ text-align: center;
+ color:#0000AA;
+ font-family: Arial;
+ font-weight:900;
+ font-size: 16pt;
+ border-width: 0px;
+ background: transparent;
+  } 
+.styleRight{
+ text-align: center;
+ color:#AA0000;
+ font-family: Arial;
+ font-weight:900;
+ font-size: 16pt;
+ border-width: 0px;
+ background: transparent;
+  }   
+ .headset {
+  position: absolute;
+  left: 100px;
+  top: 0px;
+  z-index: -1;
+}
+ .calibrate {
+  position: absolute;
+  left: 400px;
+  top: 0px;
+  z-index: -1;
+}
+ .room {
+  position: absolute;
+  left: 220px;
+  top: 200px;
+  z-index: 0;
+}
+ .right_cup {
+  position: absolute;
+  left: 400px;
+  top: 200px;
+  z-index: 0;
+}
+ .left_cup {
+  position: absolute;
+  left: 40px;
+  top: 200px;
+  z-index: 0;
+}
+.com_port{
+  position: absolute;
+  left: 70px;
+  top: 300px;
 
- B {font-family:arial, helvetica; font-size:16px; font-weight:bold;}
- input.CurValues{background: #ddd; font-size:18px; width: 100px; font-weight:bold; border:0px; text-align:left; border:1px;}
- input.Effiency{background: #fc0; font-size:20px; width: 50px; font-weight:bold; border:0px; text-align:center}  
-  
+}
 -->
 </style>
 
@@ -140,89 +188,60 @@ var z=0;
  }
 
 }
-function CheckDelay1_Ones(Number,this_pointer){
-var State=this_pointer.className;
-var NameElem=null;
- // zeroed another
- for (i=1; i<10; i++){
- NameElem="Delay1_"+i;
- document.all[NameElem].className = 'DelayUnSelected';
- }
  
  
-if(State == 'DelayUnSelected')this_pointer.className='DelaySelected'; 
-else
-if(State == 'DelaySelected')this_pointer.className='DelayUnSelected'; 
-
-//check what is values
-var z=0;
- for (i=1; i<10; i++){
-  if(document.all['Delay1_'+i].className == 'DelaySelected'){z=i;}
-  if(!z) Delay1_Ones=0;
-  else{Delay1_Ones=z;}
-  Delay1_Result = Delay1_Ones+Delay1_Parts;
-  window.document.all['Delay1_result'].innerHTML = " = "+Delay1_Result.toFixed(1);
- 
- }
-
+function matrixArray(rows,columns){
+  var arr = new Array();
+  for(var i=0; i<rows; i++){
+    arr[i] = new Array();
+    for(var j=0; j<columns; j++){
+      arr[i][j] = i+j+1;//вместо i+j+1 пишем любой наполнитель. В простейшем случае - null
+    }
+  }
+  return arr;
 }
 
-function CheckDelay1_Parts(Number,this_pointer){
-var State=this_pointer.className;
-var NameElem=null;
- // zeroed another
- for (i=1; i<10; i++){
- NameElem="Delay1_0_"+i;
- document.all[NameElem].className = 'DelayUnSelected';
- }
- 
- 
-if(State == 'DelayUnSelected')this_pointer.className='DelaySelected'; 
-else
-if(State == 'DelaySelected')this_pointer.className='DelayUnSelected'; 
+var Middle_P1_Arr = matrixArray(7,10);
+var Middle_T1_Arr = matrixArray(7,10);
+var Middle_Ind1 = 0;
+var Filled_A1 = false;
 
-//check what is values
-var z=0;
- for (i=1; i<10; i++){
-  if(document.all['Delay1_0_'+i].className == 'DelaySelected'){z=i;}
-  if(!z) Delay1_Parts=0;
-  else{Delay1_Parts=0.1*z;}
-  Delay1_Result = Delay1_Ones+Delay1_Parts;
-  window.document.all['Delay1_result'].innerHTML = " = "+Delay1_Result.toFixed(1);
- }
+function GetMiddleP1(Sensor, Pressure){
+var PressMid = 0;
 
-}
- 
-function ChangeNumberSet(OperateVar,NameChangeField,leftBarrier,rightBarrier){ // What variable is used, What input.value accurding change,  
-var Condition=null;     
-var Value=window.document.all[NameChangeField].value;//window[OperateVar]; 
-    Value=Value*1;                                                  //
-if (side>0){
-	switch (side){
-		case 1:
-		 Value++;
-		 break;
-		case 2: 
-		 Value--;
-		break;
-	}
-	
- 	if (Value>rightBarrier) Value=leftBarrier;
-     else
-    if (Value<leftBarrier) Value=rightBarrier;
-	window.document.all[NameChangeField].value = Value;
-	window[OperateVar] = Value;
-	Condition=setTimeout(function(){ChangeNumberSet(OperateVar,NameChangeField,leftBarrier,rightBarrier)},250); 
-	}
+Middle_P1_Arr[Sensor][Middle_Ind1] = Pressure;
+Middle_Ind1++;
+if (Middle_Ind1 == 10)Filled_A1 = true;
+Middle_Ind1 = Middle_Ind1 % 10;
+
+
+ if(Filled_A1 != true){
+  for(i = 0 ; i < Middle_Ind1; i++) PressMid += Middle_P1_Arr[Sensor][i];
+  
+  return PressMid/Middle_Ind1;
+   
+ }
  else{
- clearTimeout(Condition);
- }
+  for(i = 0 ; i < 10; i++) PressMid += Middle_P1_Arr[Sensor][i];
+  }
+  return PressMid/10;
+  
 }
 
+function SetValuesToHTML(Temp_Room, Pressure_Room, Temp_L, Pressure_L, Temp_R, Pressure_R, VoltageResistance, CurrentResistance, ErrorCode, Condition){ // set Values To the Form
 
-function SetValuesToHTML(Temp_1, Pressure_1, VoltageInput, CurrentInput, VoltageAccum, CurrentAccum, VoltageResistance, CurrentResistance, ErrorCode, Condition){ // set Values To the Form
- window.document.all.temperature.value = (Temp_1/100.0) + "°C";
- window.document.all.pressure.value = (Pressure_1/1000.0)+ "hPa" ;
+
+
+Pressure_Room = GetMiddleP1(0,Pressure_Room);
+
+ window.document.all['temperature'].innerHTML = (Temp_Room/100.0).toFixed(2) + "°C";
+ window.document.all['pressure'].innerHTML = (Pressure_Room/1000.0).toFixed(2)+ "hPa" ;
+ 
+ window.document.all['temperatureL'].innerHTML = (Temp_L/100.0).toFixed(2) + "°C";
+ window.document.all['pressureL'].innerHTML = (Pressure_L/1000.0).toFixed(2)+ "hPa" ;
+ 
+ window.document.all['temperatureR'].innerHTML = (Temp_R/100.0).toFixed(2) + "°C";
+ window.document.all['pressureR'].innerHTML = (Pressure_R/1000.0).toFixed(2)+ "hPa" ;
  }
  
  function CreateCOMportsList (DisplayList) 
@@ -309,14 +328,51 @@ function CommunicateToCOM ()
 </script>
 </head>
 
-<body bgcolor="#CCCCDD" >
+<body bgcolor="#EEEEFF" >
 
-<input class = "styleEff" type = "text" id = "temperature" value = "0.0" ></input><br/>
-<input class = "styleEff" type = "text" id = "pressure" value = "0.0" ></input><br/>
-<TEXTAREA type="text" cols="60" rows="6" name="CommExit" value="123"></TEXTAREA><br/>
+<img src="../interface/images/headset.png" alt="HEADSET" class="headset"><br/>
+<img src="../interface/images/calibrate.png" alt="Calibrate" class="calibrate"><br/>
+
+<table align = "center" border = "0" cellspacing="0" cellpadding = "0" class="room">
+	<tr>
+		<td align = "center" width = "120" bgcolor="#EEEEAA" > Press. & Temp.:</td>
+	</tr>
+	<tr>
+		<td align = "center" width = "120" bgcolor="#FFFFCC"><span class = "styleRoom" type = "text" id = "temperature"></span></td>
+	</tr>	
+	<tr>
+		<td align = "center" width = "120" bgcolor="#FFFFCC"><span class = "styleRoom" type = "text" id = "pressure"></span></td>
+	</tr>	
+</table>	
+<table align = "center" border = "0" cellspacing="0" cellpadding = "0" class="left_cup">
+	<tr>
+		<td align = "center" width = "120" bgcolor="#EEEEAA" > Press. & Temp.:</td>
+	</tr>
+	<tr>
+		<td align = "center" width = "120" bgcolor="#FFFFCC"><span class = "styleLeft" type = "text" id = "temperatureL"></span></td>
+	</tr>	
+	<tr>
+		<td align = "center" width = "120" bgcolor="#FFFFCC"><span class = "styleLeft" type = "text" id = "pressureL"></span></td>
+	</tr>	
+</table>	
+
+<table align = "center" border = "0" cellspacing="0" cellpadding = "0" class="right_cup">
+	<tr>
+		<td align = "center" width = "120" bgcolor="#EEEEAA" > Press. & Temp.:</td>
+	</tr>
+	<tr>
+		<td align = "center" width = "120" bgcolor="#FFFFCC"><span class = "styleRight" type = "text" id = "temperatureR"></span></td>
+	</tr>	
+	<tr>
+		<td align = "center" width = "120" bgcolor="#FFFFCC"><span class = "styleRight" type = "text" id = "pressureR"></span></td>
+	</tr>	
+</table>	
+
+<div class="com_port">
+<TEXTAREA type="text" cols="50" rows="3" name="CommExit" value="123" ></TEXTAREA><br/>
          <table border="0">
 			<tr>
-				<td valign="center">
+				<td>
 		<span id="selectCOM">&nbsp;</span>
 		        </td>
 				<td valign="center">
@@ -324,6 +380,6 @@ function CommunicateToCOM ()
 		        </td>
 			</tr>
 		 </table>		  
-
+</div>
 </body>
 </html>

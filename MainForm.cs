@@ -112,18 +112,6 @@ namespace Drive1
 		
 		void WebBrowser1DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
 		{
-			//
-			//	MyPort= new SerialPort("COM2" , 9600, Parity.None, 8, StopBits.One);
-			//    MyPort.ReadTimeout = 2500;
-            //    MyPort.WriteTimeout = 2500;
-            //    MyPort.ReadBufferSize = 4096;
-            //    MyPort.WriteBufferSize = 4096;
-            //    MyPort.DataReceived += new SerialDataReceivedEventHandler(MyPort_DataReceived);
-            //    MyPort.Encoding = System.Text.Encoding.GetEncoding("windows-1251");
-            //    MyPort.Open();
-			//    byte[] data = { 0, 1, 2, 1, 0 };
-            //    MyPort.Write(data, 0, data.Length);
-			//
 		 string[] ports = SerialPort.GetPortNames();
 		 string MessageInnerHTML=null;
 		 Array.Sort(ports);

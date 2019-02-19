@@ -5,8 +5,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Drive1</RootNamespace>
-    <AssemblyName>Drive1</AssemblyName>
+    <RootNamespace>Barocamera</RootNamespace>
+    <AssemblyName>Barocamera</AssemblyName>
     <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <NoWin32Manifest>False</NoWin32Manifest>

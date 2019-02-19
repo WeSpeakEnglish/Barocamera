@@ -48,7 +48,6 @@ namespace Drive1
 			// webBrowser1
 			// 
 			resources.ApplyResources(this.webBrowser1, "webBrowser1");
-			this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
 			this.webBrowser1.Name = "webBrowser1";
 			this.webBrowser1.ScrollBarsEnabled = false;
 			this.webBrowser1.Url = new System.Uri("http://127.0.0.1/", System.UriKind.Absolute);
@@ -73,6 +72,7 @@ namespace Drive1
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormClosing);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.ResumeLayout(false);
+
 		}
 		private System.IO.Ports.SerialPort serialPort1;
 		private System.Windows.Forms.Timer timer1;
@@ -80,18 +80,8 @@ namespace Drive1
 		
 		void Timer1Tick(object sender, System.EventArgs e)
 		{
-//			if(MyPort.HaveMessage){
-//				MyPort.HaveMessage = false;
-//		 System.Windows.Forms.HtmlDocument document = this.webBrowser1.Document;
-// 		 Object[] objArray = new Object[1];
-// 		 objArray[0] = (Object)("1");
-// 		 document.InvokeScript("WritePorts",objArray);
-				
-//			}
-//int.Parse(this.Text)
-    //this.Text = ( Index++).ToString();
     
-    this.Text= "HunterDrive "+DateTime.Now.ToString();
+    this.Text= "Barocamera "+DateTime.Now.ToString();
 		}
 	}
 }
