@@ -79,10 +79,18 @@ var Minutes = 0;
 var Seconds = 0;
 var Days = 1;
 var Months  = 1;
-var Years = 2013;
+var Years = 2019;
 
 var CommunicateCOMcondition=0;
 
+var P_Calib = new Array();
+P_Calib[0] = 0.0;
+P_Calib[1] = 0.0;
+P_Calib[2] = 0.0;
+P_Calib[3] = 0.0;
+P_Calib[4] = 0.0;
+P_Calib[5] = 0.0;
+var CalibrateFlag = 0;
 //-- Load images
 
 //manipulating images
@@ -140,6 +148,15 @@ function SetValuesToHTML(Temp_Room, Pressure_Room, Temp_L, Pressure_L, Temp_R, P
 
 Pressure_Room = GetMiddleP1(0,Pressure_Room);
 Pressure_L = GetMiddleP1(1,Pressure_L);
+
+if(CalibrateFlag == 1){
+CalibPressure(Pressure_Room, Pressure_L);
+CalibrateFlag = 0;
+}
+
+Pressure_Room = Pressure_Room - P_Calib[0];
+Pressure_L = Pressure_L - P_Calib[1];
+
 Middle_Ind1++;
 
  window.document.all['temperature'].innerHTML = (Temp_Room/100.0).toFixed(2) + "°C";
@@ -227,13 +244,17 @@ function CommunicateToCOM ()
  return;
  }
  
+ function CalibPressure(Pressure_Room, Pressure_L){
+   P_Calib[0] = Pressure_Room - (Pressure_Room + Pressure_L)/2;
+   P_Calib[1] = Pressure_L - (Pressure_Room + Pressure_L)/2;
+ }
 </script>
 </head>
 
 <body bgcolor="#EEEEFF" >
 
 <img src="../interface/images/headset.png" alt="HEADSET" class="headset"><br/>
-<img src="../interface/images/calibrate.png" alt="Calibrate" class="calibrate" ><br/>
+<img src="../interface/images/calibrate.png" alt="Calibrate" class="calibrate" onClick="javascript:CalibrateFlag =1;"><br/>
 
 <table align = "center" border = "0" cellspacing="0" cellpadding = "0" class="room">
 	<tr>
