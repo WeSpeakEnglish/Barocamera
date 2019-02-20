@@ -82,9 +82,10 @@ namespace Drive1
 
      	
      
-        	ValuesOfSource[0]=(read_buf[1]*100+read_buf[2]); //get Command Type [0]
-        	ValuesOfSource[1]=(read_buf[3]*10000 + read_buf[4]*100 + read_buf[5]); //get SizeOfMessage [1]
-
+        	ValuesOfSource[0]=(read_buf[1]*100+read_buf[2]); //
+        	ValuesOfSource[1]=(read_buf[3]*10000 + read_buf[4]*100 + read_buf[5]); //
+        	ValuesOfSource[2]=(read_buf[6]*100+read_buf[7]); //
+        	ValuesOfSource[3]=(read_buf[8]*10000 + read_buf[9]*100 + read_buf[10]); //
 
      	
      	// Send data to form

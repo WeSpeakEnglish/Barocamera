@@ -210,7 +210,7 @@ function GetMiddleP1(Sensor, Pressure){
 var PressMid = 0;
 
 Middle_P1_Arr[Sensor][Middle_Ind1] = Pressure;
-Middle_Ind1++;
+
 if (Middle_Ind1 == 10)Filled_A1 = true;
 Middle_Ind1 = Middle_Ind1 % 10;
 
@@ -233,6 +233,8 @@ function SetValuesToHTML(Temp_Room, Pressure_Room, Temp_L, Pressure_L, Temp_R, P
 
 
 Pressure_Room = GetMiddleP1(0,Pressure_Room);
+Pressure_L = GetMiddleP1(1,Pressure_L);
+Middle_Ind1++;
 
  window.document.all['temperature'].innerHTML = (Temp_Room/100.0).toFixed(2) + "°C";
  window.document.all['pressure'].innerHTML = (Pressure_Room/1000.0).toFixed(2)+ "hPa" ;
